@@ -1,0 +1,7 @@
+{
+  "name": "cpReactBridgeRa",
+  "displayName": "cpReactBridgeRa",
+  "plugins": [
+    "expo-secure-store"
+  ]
+}
