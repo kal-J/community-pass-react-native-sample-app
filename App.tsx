@@ -10,49 +10,26 @@ import {
   View,
 } from 'react-native';
 import CompassHelper from './utils/compass-helper';
+import RouterRoot from 'react-native-auto-route';
+import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'orange',
+  },
+};
+
+
 
 
 function App(): React.JSX.Element {
+  return <PaperProvider theme={theme}>
+    <RouterRoot />
+  </PaperProvider>;
 
-  const compassHelper = new CompassHelper();
-
-
-  return (
-    <SafeAreaView className='bg-white'>
-      <StatusBar
-        barStyle='light-content'
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        className='p-4 bg-white'>
-        <View className="flex flex-row justify-center flex-1 w-full px-4 py-4 bg-white">
-
-
-          <Text className="text-lg font-bold">React Native Bridge RA</Text>
-
-        </View>
-        <View className='flex p-4 space-y-8'>
-          <TouchableOpacity className='flex items-center justify-center p-4 bg-blue-600' onPress={() => {
-            compassHelper.getInstanceId();
-          }}>
-            <Text className='text-lg text-white'>Get Instance Id</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity className='flex items-center justify-center p-4 bg-blue-600' onPress={() => {
-            compassHelper.saveBiometricsConsent(1);
-          }}>
-            <Text className='text-lg text-white'>Save Biometrics</Text>
-          </TouchableOpacity>
-
-
-
-
-
-
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
 }
 
 export default App;

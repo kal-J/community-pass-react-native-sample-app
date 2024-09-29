@@ -1,6 +1,7 @@
 
 export const RELIANT_APP_GUID = "22730f2b-70c0-490a-96ef-0c0e406708a2";
-export const PROGRAM_GUID = "2e440e7f-3572-4321-998c-847383450fe5"; // Credential Manager Guid
+export const CREDENTIAL_PROGRAM_GUID = "2e440e7f-3572-4321-998c-847383450fe5"; // Credential Manager Guid
+export const ACCEPTOR_PROGRAM_GUID = "752a94d5-cf80-45e6-8d2c-305f1b841991"; // Accepter Program Guid
 export const PACKAGE_NAME = "com.tiv.cp"
 
 export const RA_PUBLIC_KEY = `-----BEGIN RSA PUBLIC KEY-----
