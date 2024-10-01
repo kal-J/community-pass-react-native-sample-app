@@ -13,6 +13,8 @@ import JSONTree from 'react-native-json-tree';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { RELIANT_APP_GUID, CREDENTIAL_PROGRAM_GUID } from "../env";
 import { getData, storeData } from '../utils/local-store';
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 
 const compassHelper = new CompassHelper();
@@ -24,6 +26,8 @@ function Home(): React.JSX.Element {
     const [isLoading, setIsLoading] = React.useState(false);
     const [rId, setRid] = React.useState('');
     const [consumerDeviceId, setConsumerDeviceId] = React.useState('');
+
+    
 
     React.useEffect(() => {
         compassHelper.getFromLocalSecureStore('instanceId').then((instanceId) => setState({ ...state, instanceId: instanceId }));
@@ -128,6 +132,17 @@ function Home(): React.JSX.Element {
             </View>
         );
     }
+
+    const actions = [
+        { label: 'Get Instance ID', value: '1', execute: getInsatnceId },
+        { label: 'Item 2', value: '2' },
+        { label: 'Item 3', value: '3' },
+        { label: 'Item 4', value: '4' },
+        { label: 'Item 5', value: '5' },
+        { label: 'Item 6', value: '6' },
+        { label: 'Item 7', value: '7' },
+        { label: 'Item 8', value: '8' },
+      ];
 
     return (
         <SafeAreaView className='bg-white '>

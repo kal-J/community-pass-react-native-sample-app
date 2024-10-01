@@ -283,6 +283,58 @@ export default class CompassHelper {
 
     }
 
+    async createBiometricDigitalId(
+        programGuid: string,
+        consentId: string,
+        encrypt = true,
+        forcedModalityFlag = true,
+        operationMode = 'BEST_AVAILABLE'
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: env.CREDENTIAL_PROGRAM_GUID,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    consentId: consentId,
+                    modality: ["FACE", "LEFT_PALM", "RIGHT_PALM"],
+                    forcedModalityFlag: forcedModalityFlag,
+                    encrypt: encrypt,
+                    operationMode: operationMode
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1024', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('createBiometricDigitalId error: ', error, "\n");
+            return {
+                error: {
+                    action: '1024',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
     async writeDigitalIdonCard(programGuid: string, rId: string): Promise<UnifiedApiResponse> {
 
         try {
@@ -317,53 +369,6 @@ export default class CompassHelper {
             return {
                 error: {
                     action: '1042',
-                    errorMessage: error.message,
-                    extraErrorMessage: '',
-                }
-            };
-        }
-
-
-    }
-
-    async verifyPasscode(
-        programGuid: string,
-        formFactor: string,
-        passcode: number
-    ): Promise<UnifiedApiResponse> {
-
-        try {
-
-            const cmtObject = (this.prepareCMT({
-                participationProgramId: env.CREDENTIAL_PROGRAM_GUID,
-                transactionTagId: 'BridgeRA',
-                status: 'Testing',
-                payload: {
-                    programGuid: programGuid,
-                    formFactor: formFactor,
-                    passcode: passcode
-                },
-            }));
-
-            const cmt = JSON.stringify(cmtObject);
-
-            if (!isCmtSchemaValid(cmtObject)) {
-                throw new Error("CMT schema is not valid");
-            }
-
-            const encryptedPayload = await this.prepareRequest(cmt);
-
-            const response = await this.executeUnifiedApiRequest('1038', encryptedPayload);
-
-            console.log(response);
-
-            return response;
-
-        } catch (error: any) {
-            console.log('verifyPasscode error: ', error, "\n");
-            return {
-                error: {
-                    action: '1038',
                     errorMessage: error.message,
                     extraErrorMessage: '',
                 }
@@ -419,5 +424,384 @@ export default class CompassHelper {
 
 
     }
+
+    async verifyPasscode(
+        programGuid: string,
+        formFactor: string,
+        passcode: number
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: programGuid,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    formFactor: formFactor,
+                    passcode: passcode
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1038', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('verifyPasscode error: ', error, "\n");
+            return {
+                error: {
+                    action: '1038',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
+    async addBiometricsToCpUserProfile(
+        programGuid: string,
+        consentId: string,
+        formFactor = "CARD",
+        rId: string
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: env.CREDENTIAL_PROGRAM_GUID,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    consentId: consentId,
+                    modality: ["FACE", "LEFT_PALM", "RIGHT_PALM"],
+                    formFactor: formFactor,
+                    rId: rId
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1001', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('createBiometricDigitalId error: ', error, "\n");
+            return {
+                error: {
+                    action: '1001',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
+    async updateProfileOnCard(
+        programGuid: string,
+        rId: string
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: env.CREDENTIAL_PROGRAM_GUID,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    rId: rId
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1035', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('createBiometricDigitalId error: ', error, "\n");
+            return {
+                error: {
+                    action: '1035',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
+    async IdentifyBiometricDigitalId(
+        programGuid: string,
+        forcedModalityFlag = true,
+        modality = ["FACE", "LEFT_PALM", "RIGHT_PALM"],
+        cacheHashesIfIdentified = true,
+        consentId: string
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: env.CREDENTIAL_PROGRAM_GUID,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    modality: modality,
+                    consentId: consentId,
+                    cacheHashesIfIdentified: cacheHashesIfIdentified,
+                    forcedModalityFlag: forcedModalityFlag
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1034', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('createBiometricDigitalId error: ', error, "\n");
+            return {
+                error: {
+                    action: '1034',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
+    async verifyBiometicDigitalIdViaCard(
+        programGuid: string,
+        forcedModalityFlag = true,
+        modality = ["FACE", "LEFT_PALM", "RIGHT_PALM"],
+        formFactor: "CARD",
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: env.CREDENTIAL_PROGRAM_GUID,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    modality: modality,
+                    formFactor: formFactor,
+                    forcedModalityFlag: forcedModalityFlag
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1048', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('verifyBiometicDigitalIdViaCard error: ', error, "\n");
+            return {
+                error: {
+                    action: '1048',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
+    async verifyDigitalIdWithPasscodeViaCard(
+        programGuid: string,
+        passcode: string,
+        formFactor = "CARD",
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: env.CREDENTIAL_PROGRAM_GUID,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    passcode: passcode,
+                    formFactor: formFactor,
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1038', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('verifyDigitalIdWithPasscodeViaCard error: ', error, "\n");
+            return {
+                error: {
+                    action: '1038',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
+    async enrollNewUserInProgram(
+        programGuid: string,
+        formFactor = "CARD",
+        authToken: string
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: programGuid,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                    programGuid: programGuid,
+                    authToken: authToken,
+                    formFactor: formFactor,
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1030', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('enrollNewUserInProgram error: ', error, "\n");
+            return {
+                error: {
+                    action: '1030',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
+    async getConsumerDeviceNumber(
+        programGuid: string,
+    ): Promise<UnifiedApiResponse> {
+
+        try {
+
+            const cmtObject = (this.prepareCMT({
+                participationProgramId: programGuid,
+                transactionTagId: 'BridgeRA',
+                status: 'Testing',
+                payload: {
+                },
+            }));
+
+            const cmt = JSON.stringify(cmtObject);
+
+            if (!isCmtSchemaValid(cmtObject)) {
+                throw new Error("CMT schema is not valid");
+            }
+
+            const encryptedPayload = await this.prepareRequest(cmt);
+
+            const response = await this.executeUnifiedApiRequest('1008', encryptedPayload);
+
+            console.log(response);
+
+            return response;
+
+        } catch (error: any) {
+            console.log('getConsumerDeviceNumber error: ', error, "\n");
+            return {
+                error: {
+                    action: '1008',
+                    errorMessage: error.message,
+                    extraErrorMessage: '',
+                }
+            };
+        }
+
+
+    }
+
 
 }
