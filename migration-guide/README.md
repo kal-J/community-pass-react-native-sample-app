@@ -18,8 +18,8 @@ npx install-expo-modules@latest && npx expo install expo-intent-launcher
 npm i ./{path-to-.tgz file}
 ```
 5. Create a file e.g `compass-helper.ts` where you shall implement methods to invoke the Bridge RA actions. We shall then replace all imports from the `community-pass-react-native-wrapper` with their equivalent from the `compass-helper.ts`.  When using the [Expo IntentLauncher](https://docs.expo.dev/versions/latest/sdk/intent-launcher/) to fire actions to the Bridge RA, the `compass-helper.ts` can look something like this:
-
 [utils/compass-helper.ts](https://github.com/kal-J/community-pass-react-native-sample-app/blob/5f763eb0ee52e455111530aca0b95c080195d787/utils/compass-helper.ts)
+https://github.com/kal-J/community-pass-react-native-sample-app/blob/5f763eb0ee52e455111530aca0b95c080195d787/utils/compass-helper.ts
 
 # Recomendations
 - If the Reliant app has both Credential manager and Acceptor use cases, make sure to pass different `participationProgramId` or `programGuid` accordingly.
