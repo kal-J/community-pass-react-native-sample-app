@@ -92,13 +92,13 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
+            storeFile file('com.tiv.cp.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
         release {
-            storeFile file('debug.keystore')
+            storeFile file('com.tiv.cp.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'

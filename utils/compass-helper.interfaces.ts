@@ -1,3 +1,13 @@
+export interface UnifiedApiResponse {
+    payload?: Record<string, any>;
+    error?: {
+        action: string;
+        errorCode?: string | number;
+        errorMessage: string;
+        extraErrorMessage: string;
+    };
+}
+
 // Enums
 export enum OperationMode {
     BEST_AVAILABLE = "BEST_AVAILABLE",

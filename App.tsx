@@ -13,6 +13,7 @@ import CompassHelper from './utils/compass-helper';
 import RouterRoot from 'react-native-auto-route';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 
+
 const theme = {
   ...DefaultTheme,
   colors: {
