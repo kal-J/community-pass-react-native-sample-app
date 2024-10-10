@@ -16,8 +16,6 @@ import {
 } from 'react-native-android-utils';
 import { RegisterBasicUserResponse1005, RegisterBiometricUserResponse1051, RegistrationDataResponse1047, SaveBiometricConsentResponse1031, UnifiedApiResponse, WriteProfileOnCardResponse1042, WritePasscodeOnCardResponse1043, VerifyPasscodeResponse1038, VerifyUserResponse1048, IdentifyBiometricsResponse1034, ConsumerDeviceNumberResponse1008, WriteProgramSpaceResponse1046 } from './compass-helper.interfaces';
 
-
-
 export default class CompassHelper {
     public instanceId: string | null = null;
     public bridgeRAEncPublicKey: string | null = null;
